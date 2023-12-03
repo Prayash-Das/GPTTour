@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>TOUR GPT</title>
+<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.1/socket.io.min.js"></script>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    .title {
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .chat-container {
+      width: 500px;
+      height: 300px;
+      border: 1px solid #ccc;
+      overflow-y: scroll;
+      padding: 10px;
+      margin-bottom: 20px;
+      direction: rtl;
+    }
+
+    .message {
+      display: block;
+      background-color: #f1f1f1;
+      border-radius: 5px;
+      padding: 8px;
+      margin-bottom: 5px;
+      clear: both;
+      text-align: left;
+    }
+
+    .small-text-area {
+      width: 500px;
+      height: 50px;
+      font-size: 14px;
+      padding: 5px;
+      margin-bottom: 20px;
+    }
+
+    .send-button {
+      font-size: 16px;
+      padding: 10px 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">TOUR GPT</h1>
+    <div class="chat-container" id="chatContainer"></div>
+    <br>
+    <textarea class="small-text-area" id="inputTextArea"></textarea>
+    <br>
+    <button class="send-button" onclick="appendText('chatContainer', 'right')">Send </button>
+    <!-- <button class="send-button" onclick="appendText('chatContainer', 'left')">Send (Left)</button> -->
+  </div>
+
+  <script>
+    function appendText(containerId, position,input=null) {
+  var inputText = input == null ? document.getElementById("inputTextArea").value.trim() : input;
+  
+  if (inputText === "") {
+    return; // Exit the function if the input text is empty
+  }
+  
+  var chatContainer = document.getElementById(containerId);
+
+  var message = document.createElement("div");
+  message.className = "message";
+  message.textContent = inputText;
+
+  if (position === "right") {
+    message.style.float = "right";
+    message.style.textAlign = "right";
+    sendMessage(inputText);
+  } else {
+    message.style.float = "left";
+    message.style.backgroundColor  = "rgb(133, 133, 173)";
+    message.style.color = "white";
+  }
+
+  chatContainer.appendChild(message);
+
+  // Scroll to the bottom of the chat container
+  chatContainer.scrollTop = chatContainer.scrollHeight;
+
+  // Clear the input textarea
+  document.getElementById("inputTextArea").value = "";
+  if(position == "right"){
+    appendText('chatContainer', 'left', " ");
+  }
+  
+}
+
+function appendToLastMessage(containerId,inputText) {
+  var chatContainer = document.getElementById(containerId);
+
+  // Find the last message inside the chat container
+  var lastMessage = chatContainer.querySelector(".message:last-child");
+
+  if (lastMessage) {
+    var content = document.createElement("span");
+    content.textContent = inputText;
+
+    // Append the new content to the last message
+    lastMessage.appendChild(content);
+  }
+
+  // Clear the input textarea
+  document.getElementById("inputTextArea").value = "";
+}
+
+var socket = io('http://192.168.1.91:6005');
+       
+       // Event handler for receiving WebSocket response from the server
+       socket.on('response', function(data) {
+           console.log('Received response:', data);
+           // appendText('chatContainer', 'left', data)
+           // Update the webpage with the response data
+           // var outputDiv = document.getElementById('output');
+           // outputDiv.innerHTML += '<p>' + data + '</p>';
+       });
+       socket.on('respig', function(data) {
+           // console.log('Received response:', data);
+           appendToLastMessage('chatContainer',data);
+           // Update the webpage with the response data
+           // var outputDiv = document.getElementById('output');
+           // outputDiv.innerHTML += '<p>' + data + '</p>';
+       });
+       
+       // Function to send a mesdatsage to the server via WebSocket
+       function sendMessage(textData) {
+           // var input = document.getElementById('input');
+           var message = textData;
+           
+           // Send the message to the server
+           socket.send(message);
+           // Clear the input field
+           // input.value = '';
+       }
+       
+  function loopOverString(text) {
+  Array.from(text).forEach(function (character) {
+    appendToLastMessage('chatContainer',character);
+
+    // console.log(character);
+  });
+}
+
+window.onload = function() {
+  appendText('chatContainer', 'left', " ");  
+  loopOverString("Welcome to Tour GPT, How may i assist you");
+};
+
+   // document.addEventListener("DOMContentLoaded", function() {
+   // 
+   //    });
+       
+
+  </script>
+</body>
+</html>
