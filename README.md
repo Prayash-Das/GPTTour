@@ -48,7 +48,7 @@ This ensures TourGPT can serve rich, destination-specific responses.
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/Prayash-Das/GPTTour.git
+   git clone https://github.com/Prayash-Das/TourGPT.git
    cd TourGPT
 Install Python dependencies:
 pip install torch flask flask-socketio
