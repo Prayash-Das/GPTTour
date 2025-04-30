@@ -45,42 +45,61 @@ This ensures TourGPT can serve rich, destination-specific responses.
 
 ## ⚙️ Getting Started
 
-1. **Clone the repository:**
+1.  **Clone the repository:**
 
-   ```bash
-   git clone https://github.com/Prayash-Das/TourGPT.git
-   cd TourGPT
-Install Python dependencies:
-pip install torch flask flask-socketio
-(Optional) Train the model:
-If you'd like to retrain:
+    ```bash
+    git clone [https://github.com/Prayash-Das/TourGPT.git](https://github.com/Prayash-Das/TourGPT.git)
+    cd TourGPT
+    ```
 
-from tourgpt import trainModel
-trainModel()
-Run the app:
-python app.py
-Then open your browser at: http://localhost:6005
-📡 Tech Stack
+2.  **Install Python dependencies:**
 
-PyTorch
-Flask + Flask-SocketIO
-HTML5 frontend (index.html)
-GPT-style Transformer (built from scratch)
-Character-level tokenizer and sampler
-🧪 Model Architecture Highlights
+    ```bash
+    pip install torch flask flask-socketio
+    ```
 
-6 Transformer Blocks
-384-dimensional embeddings
-Multi-head Attention (6 heads)
-Causal Masking
-Cross-Entropy Loss for next-token prediction
-👨‍💻 Contributors
+3.  **(Optional) Train the model:**
 
-Prayash Das
-📜 License
+    If you'd like to retrain the model with your own data or experiment with the architecture:
 
-MIT License – feel free to use and build upon TourGPT.
+    ```python
+    from tourgpt import trainModel
+    trainModel()
+    ```
 
-✨ Get Ready to Explore Like Never Before
+4.  **Run the app:**
 
-Whether you're planning a vacation or simulating an AI-driven travel assistant, TourGPT is ready to guide, inform, and inspire.
+    ```bash
+    python app.py
+    ```
+
+5.  **Open in your browser:**
+
+    Navigate to [http://localhost:6005](http://localhost:6005) in your web browser to interact with TourGPT.
+
+## 📡 Tech Stack
+
+* **Backend:** PyTorch, Flask + Flask-SocketIO
+* **Frontend:** HTML5 (`index.html`)
+* **Model:** GPT-style Transformer (built from scratch)
+* **Tokenization:** Character-level tokenizer and sampler
+
+## 🧪 Model Architecture Highlights
+
+* **Layers:** 6 Transformer Blocks
+* **Embedding Dimension:** 384-dimensional embeddings
+* **Attention Mechanism:** Multi-head Attention (6 heads)
+* **Masking:** Causal Masking for sequential processing
+* **Loss Function:** Cross-Entropy Loss for next-token prediction
+
+## 👨‍💻 Contributors
+
+* Prayash Das ([https://github.com/Prayash-Das](https://github.com/Prayash-Das))
+
+## 📜 License
+
+[MIT License](LICENSE) – Feel free to use, modify, and build upon TourGPT.
+
+## ✨ Get Ready to Explore Like Never Before
+
+Whether you're planning your next adventure or curious about the possibilities of AI-driven travel assistants, TourGPT is here to guide, inform, and spark your wanderlust. Dive in and experience the future of travel exploration!
